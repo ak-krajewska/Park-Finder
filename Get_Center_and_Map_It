@@ -21,6 +21,25 @@
       var my_lng;
 
     
+       function setPanLocation(){
+        var newcenter = map.getCenter();
+        var my_lat = newcenter.lat();
+        var my_lng = newcenter.lng();
+
+        var my_location = new google.maps.LatLng(my_lat, my_lng);
+
+        var request = {
+                  location: my_location,
+                  radius: 500,
+                  types: ['park']
+                  };
+                  infowindow = new google.maps.InfoWindow();
+                  var service = new google.maps.places.PlacesService(map);
+                  service.search(request, callback);
+
+       }
+
+
        function setGeoLocation() {
             //get the gecode data from the address from google
             var address = document.getElementById("address").value;
@@ -62,8 +81,6 @@
         // console.log(my_lat, my_long);
         map = new google.maps.Map(document.getElementById('map'), {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
-          //change this to my_location
-          //center: pyrmont,
           center: my_location,
           zoom: 15
         });
@@ -77,28 +94,19 @@
         var service = new google.maps.places.PlacesService(map);
         service.search(request, callback);
 
-        
-        //the object on which to add the listener, the event to listen for, the function to call when the event is fired
-        //center_changed -- no it does it too fast, maybe with a timeout, maaaaybe
-        //idle -- maybe. it does it every time you pause even for a sec so I think again you'd want a timeout
-        //Here is where we need to add a timeout
 
-        /*google.maps.event.addListener(map, 'idle', function() {
-        alert('Hello World!');
-         }); */
-        //end of event listener
-
+        var timer;
         google.maps.event.addListener(map, 'idle', function() {
-        // 2 second after idle 
-         window.setTimeout(function() {
-          //instead of alert move the map
-          
-          alert('Hello World!');
+          console.log("Idle");
+          if( timer ) clearTimeout(timer);
+
+          // 2 second after idle 
+          timer = setTimeout(function() {
+            console.log("Timed Out");
+            //instead of alert move the map
+            setPanLocation();
           }, 2000);
         });
-
-
-
       }
 
 
@@ -126,13 +134,20 @@
           infowindow.setContent(place.name);
           infowindow.open(map, this);
         });
+
+        //the object on which to add the listener, the event to listen for, the function to call when the event is fired
+        //center_changed -- no it does it too fast, maybe with a timeout, maaaaybe
+        //idle -- maybe. it does it every time you pause even for a sec so I think again you'd want a timeout
+        //Here is where we need to add a timeout
+
+        /*google.maps.event.addListener(map, 'idle', function() {
+        alert('Hello World!');
+         }); */
+        //end of event listener
       }
 
-      google.maps.event.addDomListener(window, 'load', initialize);
-      
+      google.maps.event.addDomListener(window, 'load', initialize);      
 
- 
-    //alert('Hello Whirl'); //this is just for testing
 
     </script>
   </head>
