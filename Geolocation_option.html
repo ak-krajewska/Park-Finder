@@ -19,6 +19,7 @@
       var geocoder = new google.maps.Geocoder();
       var my_lat; //going to need these later so making them global
       var my_lng;
+      var browserSupportFlag =  new Boolean();
 
     
        function setPanLocation(){
@@ -72,7 +73,17 @@
         }
         //end geocoder section
 
-        
+      //this is not working try it with console or something,maybe wrong variable ets.
+       //auto detect location
+        // Try W3C Geolocation (Preferred)
+        if(navigator.geolocation) {
+          browserSupportFlag = true;
+          navigator.geolocation.getCurrentPosition(function(position) {
+            initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+            map.setCenter(initialLocation);
+          }, function() {
+          handleNoGeolocation(browserSupportFlag);
+          });
         
 
       function initialize() {
@@ -96,15 +107,16 @@
 
 
         var timer;
-        google.maps.event.addListener(map, 'dragstart', function() { //try drag events instead (drag, dragend, dragstart)
-          console.log("Dragstart");
+        google.maps.event.addListener(map, 'idle', function() {
+          console.log("Idle");
           if( timer ) clearTimeout(timer);
 
-          // 1 second after dragend
+          // 2 second after idle 
           timer = setTimeout(function() {
             console.log("Timed Out");
+            //instead of alert move the map
             setPanLocation();
-          }, 1000);
+          }, 2000);
         });
       }
 

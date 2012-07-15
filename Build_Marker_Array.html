@@ -1,7 +1,7 @@
 <html lang='en'>
   <head>
     <meta charset='utf-8'>
-  <title>What Kind of Parks are Parks?</title>
+  <title>Put Parks in an Array</title>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true&libraries=places"></script>
 
     <style type="text/css">
@@ -19,6 +19,8 @@
       var geocoder = new google.maps.Geocoder();
       var my_lat; //going to need these later so making them global
       var my_lng;
+      var markers = [];       //markers is an array of markers
+
 
     
        function setPanLocation(){
@@ -90,9 +92,11 @@
           radius: 500,
           types: ['park']
         };
+         
         infowindow = new google.maps.InfoWindow();
         var service = new google.maps.places.PlacesService(map);
         service.search(request, callback);
+         
 
 
         var timer;
@@ -115,35 +119,36 @@
 
       function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
-          for (var i = 0; i < results.length; i++) {
-            createMarker(results[i]);
+          for (var i = 0; i < results.length; i++) {         
+            //var placeLoc = results[i].geometry.location;
+            
+            if (!markers[i]){
+              var marker = new google.maps.Marker({
+                map: map,
+                position: results[i].geometry.location
+              });
+              markers.push(marker); //after adding the marker to the map also push it to the array
+              console.log("Markers");
+
+              google.maps.event.addListener(marker, 'click', function() {
+                infowindow.setContent(results[i].name); //results[i].name  what is place name? google.maps.places.PlaceResult.name
+                infowindow.open(map, this);
+              });
+            
+            } else {
+              markers[i].setPosition(results[i].geometry.location);
+              markers[i].setVisible(true);              
+            }  
+            
           }
         }
+        for (var i = results.length; i < markers.length; i++) {
+          markers[i].setVisible(false);
+        }  
       }
 
-      function createMarker(place) {
-        var placeLoc = place.geometry.location;
-        var marker = new google.maps.Marker({
-          map: map,
-          position: place.geometry.location,
-          animation: google.maps.Animation.DROP
-        });
+      // start at the results.length and iterate from there through the markers array, set ivisble any that are false
 
-        google.maps.event.addListener(marker, 'click', function() {
-          infowindow.setContent(place.name);
-          infowindow.open(map, this);
-        });
-
-        //the object on which to add the listener, the event to listen for, the function to call when the event is fired
-        //center_changed -- no it does it too fast, maybe with a timeout, maaaaybe
-        //idle -- maybe. it does it every time you pause even for a sec so I think again you'd want a timeout
-        //Here is where we need to add a timeout
-
-        /*google.maps.event.addListener(map, 'idle', function() {
-        alert('Hello World!');
-         }); */
-        //end of event listener
-      }
 
       google.maps.event.addDomListener(window, 'load', initialize);      
 
