@@ -32,7 +32,7 @@
 
         var request = {
                   location: my_location,
-                  radius: 500, //meters
+                  radius: 1000, //meters
                   types: ['park']
                   };
                   infowindow = new google.maps.InfoWindow();
@@ -59,7 +59,7 @@
                  //Need to abstract this better, also possibly use anonymous functions
                  var request = {
                   location: my_location,
-                  radius: 500,
+                  radius: 1000,
                   types: ['park']
                   };
                   infowindow = new google.maps.InfoWindow();
@@ -89,7 +89,7 @@
 
         var request = {
           location: my_location,
-          radius: 500,
+          radius: 1000,
           types: ['park']
         };
          
@@ -116,42 +116,49 @@
 
 
 
-
+      var old_center;
       function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
+          
           for (var i = 0; i < results.length; i++) {         
-            //var placeLoc = results[i].geometry.location;
-            
+            // No marker, need to create it
             if (!markers[i]){
               var marker = new google.maps.Marker({
                 map: map,
                 position: results[i].geometry.location
               });
-              markers.push(marker); //after adding the marker to the map also push it to the array
-              console.log("Markers");
 
               google.maps.event.addListener(marker, 'click', function() {
                 infowindow.setContent(place.name); //results[i].name  what is place name? google.maps.places.PlaceResult.name 
                 //need to set the title for the marker??? ask zach
                 infowindow.open(map, this);
               });
-            
+
+              markers.push(marker); //add marker to markers array
+              console.log("Markers");              
+            //reuse existing marker
             } else {
               markers[i].setPosition(results[i].geometry.location);
               markers[i].setVisible(true);              
             }  
-            
           }
         }
 
-        //put oldcenter in all the places where the map settles down
-        //check that newcenter is available here
-        var moved = google.maps.geometry.spherical.computeDistanceBetween(old_center, newcenter); //this is where the error is
-        consle.log("distancemoved");
+        // Initial pin load, so set the center 
+        if( !old_center ) {
+            old_center = map.getCenter();
+            return;
+        }
+
+        var moved = google.maps.geometry.spherical.computeDistanceBetween(old_center, map.getCenter()); //this is where the error is
+            //consle.log(moved);
 
 
-        if (distancemoved > 500){   //if the map pans beyond the radius of the initial search
-          for (var i = results.length; i < markers.length; i++) { //get rid of the old markers
+        if (moved > 500){   
+            old_center = map.getCenter();
+
+            //Hide any unused markers
+            for (var i = results.length; i < markers.length; i++) { 
             markers[i].setVisible(false);
           } 
         }  

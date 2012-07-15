@@ -119,28 +119,28 @@
 
       function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
+          
           for (var i = 0; i < results.length; i++) {         
-            //var placeLoc = results[i].geometry.location;
-            
+            // No marker, need to create it
             if (!markers[i]){
               var marker = new google.maps.Marker({
                 map: map,
                 position: results[i].geometry.location
               });
-              markers.push(marker); //after adding the marker to the map also push it to the array
-              console.log("Markers");
 
               google.maps.event.addListener(marker, 'click', function() {
                 infowindow.setContent(place.name); //results[i].name  what is place name? google.maps.places.PlaceResult.name 
                 //need to set the title for the marker??? ask zach
                 infowindow.open(map, this);
               });
-            
+
+              markers.push(marker); //add marker to markers array
+              console.log("Markers");              
+            //reuse existing marker
             } else {
               markers[i].setPosition(results[i].geometry.location);
               markers[i].setVisible(true);              
             }  
-            
           }
         }
 

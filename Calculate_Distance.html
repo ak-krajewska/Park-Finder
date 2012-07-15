@@ -33,7 +33,7 @@
         }); */
     	
     	//get the newcenter -- this already exists in the function setPanLocation
-    	distancemoved = google.maps.geometry.spherical.computeDistanceBetween(oldcenter, newcenter);
+    	distancemoved = google.maps.geometry.spherical.computeDistanceBetween(oldcenter, newcenter); //this worked
     	alert("The distance is " + distancemoved + " meters");
 
     	//if the distancemove is more than 500 (meters) do a thing
