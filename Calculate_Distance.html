@@ -1,0 +1,52 @@
+<html lang='en'>
+ <head>
+    <meta charset='utf-8'>
+  <title>Calculate Distance between two Locations</title>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true&libraries=geometry,places"></script>
+   
+
+    <style type="text/css">
+      #map {
+        height: 400px;
+        width: 600px;
+        border: 1px solid #333;
+        margin-top: 0.6em;
+      }
+    </style>
+
+    <script type="text/javascript">
+
+    //find the center of the map the moment you start dragging -- dragstart
+    var oldcenter = new google.maps.LatLng(37.783706, -122.468719);
+    var newcenter = new google.maps.LatLng(37, -122);
+    //var timer;
+        /*google.maps.event.addListener(map, 'dragstart', function() { //try drag events instead (drag, dragend, dragstart)
+          console.log("Dragstart");
+          oldcenter = map.getCenter(); //this is a problem because it will just get it every single time
+          //if( timer ) clearTimeout(timer);
+
+          // 1 second after dragend
+          //timer = setTimeout(function() {
+          //  console.log("Timed Out");
+          //  setPanLocation();
+          //}, 1000);
+        }); */
+    	
+    	//get the newcenter -- this already exists in the function setPanLocation
+    	distancemoved = google.maps.geometry.spherical.computeDistanceBetween(oldcenter, newcenter);
+    	alert("The distance is " + distancemoved + " meters");
+
+    	//if the distancemove is more than 500 (meters) do a thing
+
+    	//get the old center at every single spot where a new map has loaded and things have calmed down
+
+
+
+    
+	</script>
+ </head>
+ <body>
+ 	Let Me Tell you something
+
+ </body>
+</html>
