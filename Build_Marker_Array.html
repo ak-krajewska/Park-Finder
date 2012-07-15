@@ -131,7 +131,8 @@
               console.log("Markers");
 
               google.maps.event.addListener(marker, 'click', function() {
-                infowindow.setContent(results[i].name); //results[i].name  what is place name? google.maps.places.PlaceResult.name
+                infowindow.setContent(place.name); //results[i].name  what is place name? google.maps.places.PlaceResult.name 
+                //need to set the title for the marker??? ask zach
                 infowindow.open(map, this);
               });
             
