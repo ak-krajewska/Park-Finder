@@ -1,7 +1,7 @@
 <html lang='en'>
   <head>
     <meta charset='utf-8'>
-  <title>Put Parks in an Array</title>
+  <title>Automatically find the location</title>
      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true&libraries=geometry,places"></script>
 
     <style type="text/css">
@@ -22,7 +22,34 @@
       var markers = [];       //markers is an array of markers
 
 
-    
+
+
+      function autoDetectLocation(){
+        //automatically detect location
+        if (navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(function(position) {
+              var my_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+              map.panTo(my_location);
+
+              var request = {
+                                location: my_location,
+                                radius: 1000, //meters
+                                types: ['park']
+                                };
+                                infowindow = new google.maps.InfoWindow();
+                                var service = new google.maps.places.PlacesService(map);
+                                service.search(request, callback);
+            });                            
+        } 
+      }
+
+
+        
+       
+
+
+
        function setPanLocation(){
         var newcenter = map.getCenter();
         var my_lat = newcenter.lat();
@@ -78,7 +105,8 @@
         
 
       function initialize() {
-        var my_location = new google.maps.LatLng(37.783706, -122.468719);
+        //initial location is Blue Bottle coffe on Linden St
+        var my_location = new google.maps.LatLng(37.77640, -122.42327);
         map = new google.maps.Map(document.getElementById('map'), {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           center: my_location,
@@ -105,20 +133,7 @@
             setPanLocation();
           }, 1000);
         });
-
-        //auto geolocate
-        if (navigator.geolocation){
-            navigator.geolocation.getCurrentPosition(function(position) {
-              var my_location = new google.maps.LatLng(position.coords.latitude,
-                                               position.coords.longitude);
-              map = new google.maps.Map(document.getElementById('map'), {
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                center: my_location,
-                zoom: 15
-              });
-            });
-        } 
-        //auto geolocate end
+        autoDetectLocation();
       }
 
 
@@ -159,10 +174,7 @@
             return;
         }
 
-        var moved = google.maps.geometry.spherical.computeDistanceBetween(old_center, map.getCenter()); //this is where the error is
-            //consle.log(moved);
-
-
+        var moved = google.maps.geometry.spherical.computeDistanceBetween(old_center, map.getCenter()); 
         if (moved > 500){   
             old_center = map.getCenter();
 
@@ -172,8 +184,6 @@
           } 
         }  
       }
-
-      // start at the results.length and iterate from there through the markers array, set ivisble any that are false
 
 
       google.maps.event.addDomListener(window, 'load', initialize);      
@@ -187,6 +197,7 @@
      <div> 
        <input id="address" type="textbox" value="San Jose, CA">
        <input type="button" value="Bop It!" onclick="setGeoLocation()">
+       <input type="button" value="Detect Location" onclick="autoDetectLocation()">
     </div>
        
   </body>
