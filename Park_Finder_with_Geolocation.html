@@ -147,6 +147,7 @@
           for (var i = 0; i < results.length; i++) {         
             // No marker, need to create it
             if (!markers[i]){
+              console.log("Create marker " + i);
               var marker = new google.maps.Marker({
                 map: map,
                 position: results[i].geometry.location
@@ -159,11 +160,12 @@
               });
 
               markers.push(marker); //add marker to markers array
-              console.log("Markers");              
+              console.log("Add to Markers array");              
             //reuse existing marker
             } else {
               markers[i].setPosition(results[i].geometry.location);
-              markers[i].setVisible(true);              
+              markers[i].setVisible(true);
+              console.log("Reuse marker " + i);              
             }  
           }
         }
@@ -181,6 +183,7 @@
             //Hide any unused markers
             for (var i = results.length; i < markers.length; i++) { 
             markers[i].setVisible(false);
+            console.log("Hide marker " + i);
           } 
         }  
       }
