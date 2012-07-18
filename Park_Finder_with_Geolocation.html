@@ -34,8 +34,8 @@
 
               var request = {
                                 location: my_location,
-                                radius: 1500 //, //meters
-                                //types: ['park']
+                                radius: 1500,
+                                types: ['park']
                                 };
                                 infowindow = new google.maps.InfoWindow();
                                 var service = new google.maps.places.PlacesService(map);
@@ -59,8 +59,8 @@
 
         var request = {
                   location: my_location,
-                  radius: 1500 //, //meters
-                  // types: ['park']
+                  radius: 1500,
+                  types: ['park']
                   };
                   infowindow = new google.maps.InfoWindow();
                   var service = new google.maps.places.PlacesService(map);
@@ -72,7 +72,7 @@
        function setGeoLocation() {
             //get the gecode data from the address from google
             var address = document.getElementById("address").value;
-            geocoder.geocode( { 'address': address}, function(results, status) {
+            geocoder.geocode( { 'address': address}, function(results, status, pagination) {
             if (status == google.maps.GeocoderStatus.OK) {
                 var my_lat = results[0].geometry.location.lat(); //use the lat() method to get the lat from the location object, a LatLng object
                 var my_lng = results[0].geometry.location.lng();
@@ -86,8 +86,8 @@
                  //Need to abstract this better, also possibly use anonymous functions
                  var request = {
                   location: my_location,
-                  radius: 1500 //,
-                  // types: ['park']
+                  radius: 1500,
+                  types: ['park']
                   };
                   infowindow = new google.maps.InfoWindow();
                   var service = new google.maps.places.PlacesService(map);
@@ -115,8 +115,8 @@
 
         var request = {
           location: my_location,
-          radius: 1500 //,
-          //types: ['park']
+          radius: 1500,
+          types: ['park']
         };
          
         infowindow = new google.maps.InfoWindow();
@@ -141,7 +141,7 @@
 
 
       var old_center;
-      function callback(results, status) {
+      function callback(results, status, pagination) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
           
           for (var i = 0; i < results.length; i++) {         
