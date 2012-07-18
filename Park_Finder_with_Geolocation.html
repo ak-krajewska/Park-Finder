@@ -34,9 +34,8 @@
 
               var request = {
                                 location: my_location,
-                                //radius: 1500 //, //meters
-                                types: ['park'],
-                                rankby: distance
+                                radius: 1500 //, //meters
+                                //types: ['park']
                                 };
                                 infowindow = new google.maps.InfoWindow();
                                 var service = new google.maps.places.PlacesService(map);
@@ -60,9 +59,8 @@
 
         var request = {
                   location: my_location,
-                  //radius: 1500 //, //meters
-                  types: ['park'],
-                  rankby: distance
+                  radius: 1500 //, //meters
+                  // types: ['park']
                   };
                   infowindow = new google.maps.InfoWindow();
                   var service = new google.maps.places.PlacesService(map);
@@ -88,9 +86,8 @@
                  //Need to abstract this better, also possibly use anonymous functions
                  var request = {
                   location: my_location,
-                  //radius: 1500 //,
-                  types: ['park'],
-                  rankby: distance
+                  radius: 1500 //,
+                  // types: ['park']
                   };
                   infowindow = new google.maps.InfoWindow();
                   var service = new google.maps.places.PlacesService(map);
@@ -118,9 +115,8 @@
 
         var request = {
           location: my_location,
-          //radius: 1500 //,
-          types: ['park'],
-          rankby: distance
+          radius: 1500 //,
+          //types: ['park']
         };
          
         infowindow = new google.maps.InfoWindow();
