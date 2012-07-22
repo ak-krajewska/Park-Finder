@@ -86,39 +86,32 @@
         autoDetectLocation();
       }
 
+    function showInfoWindow() { 
+        infowindow.setContent(this.getTitle()); 
+        infowindow.open(map, this);
+    }
+
 
       var old_center;
       function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
-          
             for (var i = 0; i < results.length; i++) {  
-
-                var place_names = [];
-                place_names.push(results[i].name);
-                console.log("Add place name " + results[i].name);       
                 // No marker, need to create it
                 if (!markers[i]) {
                     var marker = new google.maps.Marker({
                         map: map,
                         position: results[i].geometry.location,
-                        name: results[i].name
-                    });
-
-                    google.maps.event.addListener(marker, 'click', function() {
-                        
-                        infowindow.setContent(marker.name); //this isn't working, all the markers are name dolores park
-
-                        //results[i].name  what is place name? google.maps.places.PlaceResult.name 
-                        //need to set the title for the marker??? ask zach
-                        //why is results[i] undefined?
-                        infowindow.open(map, this);
-                    });
+                    }); 
 
                     markers.push(marker); //Add marker to markers array          
+
+                    google.maps.event.addListener(marker, 'click', showInfoWindow);
                 } 
-            markers[i].setPosition(results[i].geometry.location);
-            //Reuse markers
-            markers[i].setVisible(true);                        
+                markers[i].setPosition(results[i].geometry.location);
+                //Reuse markers
+                markers[i].setVisible(true); 
+                markers[i].setTitle(results[i].name);
+                //markers[i].results = results[i];
             }
         }
 
