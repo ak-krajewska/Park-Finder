@@ -124,6 +124,8 @@
         var moved = google.maps.geometry.spherical.computeDistanceBetween(old_center, map.getCenter()); 
         if (moved > 500) {   
             old_center = map.getCenter();
+            infowindow.close();
+
 
             //Hide any unused markers
             for (var i = results.length; i < markers.length; i++) { 
