@@ -30,7 +30,6 @@
             
              var service = new google.maps.places.PlacesService(map);
              service.search(request, callback);
-             console.log("requestPlaces");
         }
 
 
@@ -79,7 +78,6 @@
         var timer;
         google.maps.event.addListener(map, 'drag', function() { 
             infowindow.close();
-            console.log('drag');
             if( timer ) clearTimeout(timer);
             // 1 second after drag
             timer = setTimeout(function() {
@@ -92,7 +90,6 @@
     function showInfoWindow() { 
         infowindow.setContent(this.getTitle()); 
         infowindow.open(map, this);
-        console.log("INFOWINDOW " + this.getTitle());
     }
 
 
@@ -115,8 +112,6 @@
                 //Reuse markers
                 markers[i].setVisible(true); 
                 markers[i].setTitle(results[i].name);
-                console.log(results[i].name + " " + i);
-
             }
         }
         
