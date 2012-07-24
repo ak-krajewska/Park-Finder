@@ -13,10 +13,13 @@ than out on the web, know that Chrome (as of July 23, 2012) will not support aut
 
 Future Improvements
 -------------------
-Implement pagination to deal with Google Places API 20 places limit
-Detailed infowindow with open times, rating, and links to a website, if any
-A text list of nearby parks in addition to map view
-An option to view images of parks from Google street view
+- Implement pagination to deal with Google Places API 20 places limit
+
+-Detailed infowindow with open times, rating, and links to a website, if any
+
+-A text list of nearby parks in addition to map view
+
+-An option to view images of parks from Google street view
 
 --------------------
 Bugs, suggestions, job offers? Contact me!
