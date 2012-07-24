@@ -119,23 +119,7 @@
 
             }
         }
-
-        //Initial marker load, so set the center 
-        if( !old_center ) {
-            old_center = map.getCenter();
-            return;
-        }
-
-        var moved = google.maps.geometry.spherical.computeDistanceBetween(old_center, map.getCenter()); 
-        if (moved > 500) {   //500 because that's the radius I searched for initially, still seems like a good number
-            old_center = map.getCenter();
-          
-
-            //Hide any unused markers
-            for (var i = results.length; i < markers.length; i++) { 
-            markers[i].setVisible(false);
-          } 
-        } 
+        
       }
 
 
