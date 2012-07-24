@@ -17,4 +17,5 @@ Detailed infowindow with open times, rating, and links to a website, if any
 A text list of nearby parks in addition to map view
 An option to view images of parks from Google street view
 
+--------------------
 Bugs, suggestions, job offers? Contact me!
