@@ -25,6 +25,7 @@
           var my_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
           requestPlaces(my_location);
+          infowindow.close(); //close any open infowindows
           map.panTo(my_location);
       });                            
   }
@@ -38,6 +39,7 @@
                   //set the location with the info from the geocoder
                   var my_location = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng()); 
                   requestPlaces(my_location);
+                  infowindow.close(); //close any open infowindows
                   map.panTo(my_location); //move the map to the new location                      
           } else {
               alert("Geocode was not successful for the following reason: " + status);
