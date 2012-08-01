@@ -4,7 +4,7 @@
   var infowindow = new google.maps.InfoWindow();
 
 
-   //Request places info from Google, draw the map
+   // Request places info from Google, draw the map
   function requestPlaces(location) {
        var request = {
            location: location,
@@ -17,7 +17,7 @@
   }
 
 
-  //Automatically detect the location, move map to it
+  // Automatically detect the location, move map to it
   function autoDetectLocation() {
       if (!navigator.geolocation) return;
       
@@ -25,22 +25,22 @@
           var my_location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
           requestPlaces(my_location);
-          infowindow.close(); //close any open infowindows
+          infowindow.close(); // close any open infowindows
           map.panTo(my_location);
       });                            
   }
 
   
-  //Convert address to geocode, request places
+  // Convert address to geocode, request places
   function requestAddress() {
       var address = document.getElementById("address").value;
       geocoder.geocode( { 'address': address}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
-                  //set the location with the info from the geocoder
+                  // set the location with the info from the geocoder
                   var my_location = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng()); 
                   requestPlaces(my_location);
-                  infowindow.close(); //close any open infowindows
-                  map.panTo(my_location); //move the map to the new location                      
+                  infowindow.close(); // close any open infowindows
+                  map.panTo(my_location); // move the map to the new location                      
           } else {
               alert("Geocode was not successful for the following reason: " + status);
           }
@@ -49,7 +49,7 @@
 
 
 function initialize() { 
-  //initial location is Blue Bottle coffe on Linden St
+  // initial location is Blue Bottle coffe on Linden St
   var my_location = new google.maps.LatLng(37.77640, -122.42327);
   map = new google.maps.Map(document.getElementById('map'), {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -68,7 +68,7 @@ function initialize() {
       // 1 second after drag
       timer = setTimeout(function() {
           requestPlaces(map.getCenter());
-      }, 1000); //set to 2 secs for testing
+      }, 1000); // set to 2 secs for testing
   });
   autoDetectLocation();
 }
@@ -90,12 +90,12 @@ function callback(results, status) {
                   position: results[i].geometry.location,
               }); 
 
-              markers.push(marker); //Add marker to markers array          
+              markers.push(marker); // Add marker to markers array          
 
               google.maps.event.addListener(marker, 'click', showInfoWindow);
           } 
           markers[i].setPosition(results[i].geometry.location);
-          //Reuse markers
+          // Reuse markers
           markers[i].setVisible(true); 
           markers[i].setTitle(results[i].name);
       }
